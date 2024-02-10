@@ -8,9 +8,9 @@
 <body>
     <h1>Predykcja zapotrzebowania na energię</h1>
     <h3>Wykres</h3>
-    <form action="/predict" method="POST">
+    <form action="/predict" method="POST" onsubmit="return validateDate('date')">
         <label for="date">Wybierz datę i godzinę:</label>
-        <input type="datetime-local" id="date" name="date"><br>
+        <input type="datetime-local" id="date" name="date" required><br>
         <input type="submit" value="Pokaż wykres">
     </form>
 
@@ -21,10 +21,23 @@
         Plotly.plot('chart',graphs,{});
     </script>
     <h3>Dane JSON</h3>
-    <form action="/download" method="POST">
-        <label for="date">Wybierz datę i godzinę:</label>
-        <input type="datetime-local" id="date_json" name="date"><br>
+    <form action="/download" method="POST" onsubmit="return validateDate('date_json')">
+        <label for="date_json">Wybierz datę i godzinę:</label>
+        <input type="datetime-local" id="date_json" name="date" required><br>
         <input type="submit" value="Pobierz dane">
     </form>
+    <script>
+    function validateDate(name) {
+        var inputDate = new Date(document.getElementById(name).value);
+        var minDate = new Date("2018-01-02T01:00");
+        var maxDate = new Date("2023-12-31T24:00");
+        if (inputDate >= minDate && inputDate <= maxDate) {
+            return true;
+        } else {
+            alert("Ze względu na brak danych dotyczący tego okresu nie jest możliwe stworzenie predykcji.");
+            return false;
+        }
+    }
+    </script>
 </body>
 </html>
