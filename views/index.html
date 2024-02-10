@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Predykcja zapotrzebowania na energię</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <h1>Predykcja zapotrzebowania na energię</h1>
+    <h3>Wykres</h3>
+    <form action="/predict" method="POST">
+        <label for="date">Wybierz datę i godzinę:</label>
+        <input type="datetime-local" id="date" name="date"><br>
+        <input type="submit" value="Pokaż wykres">
+    </form>
+
+    <!-- Wykres predykcji -->
+    <div id="chart"></div>
+    <script type="text/javascript">
+        var graphs = {{ graphJSON | safe }};
+        Plotly.plot('chart',graphs,{});
+    </script>
+    <h3>Dane JSON</h3>
+    <form action="/download" method="POST">
+        <label for="date">Wybierz datę i godzinę:</label>
+        <input type="datetime-local" id="date_json" name="date"><br>
+        <input type="submit" value="Pobierz dane">
+    </form>
+</body>
+</html>
